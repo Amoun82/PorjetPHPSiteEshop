@@ -1,0 +1,62 @@
+PROJET - site eshop 
+-----------------------------------------
+Vous devez développer un petit site ecommerce basique, pour la boutique de vêtement de votre cousine. 
+Ils ne veulent pas utiliser de CMS, donc tout doit se faire à la main ! 
+
+Arborescence du projet : 
+--------------------------------------------
+- eshop/ 
+    - inc/ 
+        - header.inc.php (html)
+        - footer.inc.php (html)
+        - nav.inc.php (html)
+        - init.inc.php (outils PHP)
+        - functions.inc.php (fonctions)
+    - assets/ 
+        - css/ 
+            - style.css 
+        - js/
+            - script.js 
+        - fonts/ 
+            - ... nos polices 
+        - img/ 
+            - nos images (logo etc)
+        - img_produits/ 
+            - Pour les images de nos produits 
+    - admin/ 
+        - Toutes les pages back office dans ce dossier 
+    - index.php 
+    - template.php 
+
+Etapes : 
+----------
+Jour 1 
+    - Création de l'Arborescence du projet 
+    - Création de la BDD 
+    - Création du template de base (une page "type" avec toute la structure de votre site )
+    - Page inscription : formulaire + controles(le plus possible) + enregistrement de l'utilisateur en bdd 
+Jour 2 
+    - Page connexion : formulaire + controle + connexion 
+    - Page profil : affichage des données de l'utilisateur (une fois connecté)
+    - Mise en place de fonctions pour savoir si l'utilisateur est connecté et pour savoir si l'utilisateur est admin ou user normal 
+    - Mise à jour du menu selon connecté/admin/pas connecté 
+    - Restriction d'accès selon connecté/admin/pas connecté
+    - Système de deconnexion 
+Jour 3 
+    - Page admin/gestion_article.php : formulaire(controles) / enregistrement / affichage dans un tableau HTML la liste des produits / lien de suppression / lien de modification 
+    - Suppression + modification dans la BDD 
+    - Page index.php 
+    - Affichage des catégories en liste 
+    - Affichage des blocs produits : titre / photo / prix / catégorie / lien vers la page détails 
+    - Filtre à mettre en place sur catégorie 
+Jour 4 
+    - Page details_article.php : affichage des données de l'article sélectionné
+    - Champ de choix de quantité du produit 
+    - Bouton d'ajout au panier 
+    - Système de gestion du panier avec calcul prix HT puis TTC, puis la somme des produits pour donner le montant total sur la page panier, avec deux boutons, "vider panier", "payer panier"
+
+Jour 5 
+Dernière étape dès vendredi matin :
+    - Mise en ligne du projet quelque soit votre avancement 
+    - Poursuite des étapes si mise en ligne OK 
+    - Envoi en .zip de votre projet à P-A 
