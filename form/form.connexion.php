@@ -117,7 +117,7 @@ if (isset($_POST['pseudo'], $_POST['mdp'])) {
             <label for="mdp" class="form-label">Mot de passe :</label>
             <input type="password" class="form-control" id="mdp" name="mdp">
         </div>
-        <div class="col-12">
+        <div class="col-6">
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </div>
     </form>

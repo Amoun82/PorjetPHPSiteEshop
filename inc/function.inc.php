@@ -10,7 +10,7 @@ function isConnect() {
 }
 
 function isAdmin() {
-    if($_SESSION['status'] == 1)
+    if(isset($_SESSION['status']) && $_SESSION['status'] == 1)
     {
         return true ;
     }else {
