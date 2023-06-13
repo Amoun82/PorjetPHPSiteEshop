@@ -17,5 +17,7 @@ echo "</pre>";
 // declaration des constantes 
 
 // lancement de la session utilisateur 
+session_start() ;
 
+$_SESSION['URL'] = "http://localhost/PHPprojetDoranco/";
 $messageErreur = "";

@@ -1,3 +1,8 @@
+<?php
+require_once "function.inc.php";
+?>
+
+
 <body>
 
     <div class="containeur_fluide">
@@ -11,17 +16,27 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../_index.php">Acceuil</a>
+                                <a class="nav-link active" aria-current="page" href="<?= $_SESSION['URL'] ?>_index.php">Accueil</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">produits</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">connexion</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../form/form.inscription.php">Inscription</a>
-                            </li>
+                            <?php if (isConnect()) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>form/form.connexion.php">connexion</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>form/form.inscription.php">Inscription</a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if (!isConnect()) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>pageProfil.php">Page Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>deconnection.php.php">déconnection</a>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                         <form class="d-flex" role="search">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

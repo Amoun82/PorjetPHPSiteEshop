@@ -93,15 +93,17 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         // echo "l'email : ".filter_var($email, FILTER_VALIDATE_EMAIL)."<br>" ;
 
 
+        // recuperer la liste des pseudos
         $reponse = $pdo->query("SELECT pseudo from menbre");
 
         // echo "<pre>";
         // print_r($reponse);
         // echo "</pre>";
 
-        $pseudoBDD = $reponse->fetchAll();
+        $pseudoBDD = $reponse->fetchAll(PDO::FETCH_ASSOC);
         // var_dump($pseudoBDD);
 
+        // compare le pseudo envoyer par l'utilisateur par rapport au pseudo contenu dans la base
         foreach ($pseudoBDD as $key => $value) {
 
             if (strcmp($value['pseudo'], $pseudo) == 0) {
@@ -139,6 +141,12 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
             $messageErreur .= '<div class="alert alert-danger" role="alert">
             Attention, la ville ne peut pas contenir autre chose que des minuscules, majuscules.</div>';
         }
+
+        if ($verifCp == false) {
+            $erreur = true;
+            $messageErreur .= '<div class="alert alert-danger" role="alert">
+            Attention, le code postal n\'est pas bon, il doit comporter 5 chiffres.</div>';
+        }
     }
 
     // verifie la longueur du pseudo
@@ -147,11 +155,24 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         Attention votre mot de passe est trop long</div>';
         $erreur = true;
     }
+    // verifie la longueur du pseudo
+    if (iconv_strlen($mdp) < 3) {
+        $messageErreur .= '<div class="alert alert-danger" role="alert">
+        Attention votre mot de passe est trop court</div>';
+        $erreur = true;
+    }
 
     // verifie la longueur du pseudo
     if (iconv_strlen($pseudo) > 20) {
         $messageErreur .= '<div class="alert alert-danger" role="alert">
         Attention votre pseudo est trop long</div>';
+        $erreur = true;
+    }
+
+    // verifie la longueur du pseudo
+    if (iconv_strlen($pseudo) < 4) {
+        $messageErreur .= '<div class="alert alert-danger" role="alert">
+        Attention votre pseudo est trop court</div>';
         $erreur = true;
     }
     // verifie la longueur du pseudo
@@ -192,11 +213,12 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         $requete->bindParam(':adresse', $adresse, PDO::PARAM_STR);
         $requete->execute();
 
-        $arr = $requete->errorInfo();
-        print_r($arr);
-        //header('location:form.inscription.php');
-        /* $messageErreur .= '<div class="alert alert-success" role="alert">
-    vous etes enregister bravo</div>'; */
+        // $arr = $requete->errorInfo();
+        // print_r($arr);
+
+        $messageErreur = '<div class="alert alert-success" role="alert">
+    vous etes enregister, veuillez vous connectez</div>';
+        header('location:form.connexion.php');
     }
 
 
@@ -239,8 +261,8 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         </div>
         <div class="col-md-6">
             <label for="inputState" class="form-label">sexe</label>
-            <select id="inputState" class="form-select" name="sexe" id="sexe">
-                <option value="" selected>faite votre choix :</option>
+            <select id="inputState" class="form-select" name="sexe" id="sexe" required>
+                <option value="" selected disabled>faite votre choix :</option>
                 <option value="m">Homme</option>
                 <option value="f">Femme</option>
             </select>

@@ -1,1 +1,13 @@
-page d'accueil
+<?php
+require_once "./inc/init.inc.php";
+require_once "./inc/header.inc.php";
+require_once "./inc/nav.inc.php";
+
+?>
+
+
+<main>
+    page d'accueil
+</main>
+
+<?php require_once "./inc/footer.inc.php" ?>
