@@ -16,25 +16,25 @@ require_once "function.inc.php";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<?= $_SESSION['URL'] ?>_index.php">Accueil</a>
+                                <a class="nav-link active" aria-current="page" href="<?= $_COOKIE['URL'] ?>_index.php">Accueil</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">produits</a>
                             </li>
                             <?php if (isConnect()) : ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>form/form.connexion.php">connexion</a>
+                                    <a class="nav-link" href="<?= $_COOKIE['URL'] ?>form/form.connexion.php">connexion</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>form/form.inscription.php">Inscription</a>
+                                    <a class="nav-link" href="<?= $_COOKIE['URL'] ?>form/form.inscription.php">Inscription</a>
                                 </li>
                             <?php endif; ?>
                             <?php if (!isConnect()) : ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>pageProfil.php">Page Profil</a>
+                                    <a class="nav-link" href="<?= $_COOKIE['URL'] ?>pageProfil.php">Page Profil</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= $_SESSION['URL'] ?>deconnection.php.php">déconnection</a>
+                                    <a class="nav-link" href="<?= $_COOKIE['URL'] ?>deconnexion.php">déconnexion</a>
                                 </li>
                             <?php endif; ?>
                         </ul>

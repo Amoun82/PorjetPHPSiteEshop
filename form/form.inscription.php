@@ -3,6 +3,10 @@ require_once "../inc/init.inc.php";
 require_once "../inc/header.inc.php";
 require_once "../inc/nav.inc.php";
 
+if (!isConnect()) {
+    header('location:../_index.php');
+    exit();
+}
 
 // echo "<pre>";
 // print_r($_POST);

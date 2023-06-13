@@ -19,5 +19,5 @@ echo "</pre>";
 // lancement de la session utilisateur 
 session_start() ;
 
-$_SESSION['URL'] = "http://localhost/PHPprojetDoranco/";
+$_COOKIE['URL'] = "http://localhost/PHPprojetDoranco/";
 $messageErreur = "";

@@ -3,6 +3,10 @@ require_once "../inc/init.inc.php";
 require_once "../inc/header.inc.php";
 require_once "../inc/nav.inc.php";
 
+if (!isConnect()) {
+    header('location:../_index.php');
+    exit();
+}
 
 //var_dump($_POST);
 
@@ -67,8 +71,7 @@ if (isset($_POST['pseudo'], $_POST['mdp'])) {
             $messageErreur .= '<div class="alert alert-success" role="alert">votre pseudo est connu.</div>';
         }
 
-        if(!empty($reponse['mdp']))
-        {
+        if (!empty($reponse['mdp'])) {
             if (password_verify($mdp, $reponse['mdp'])) {
                 $messageErreur .= '<div class="alert alert-success" role="alert">les mots de passe correspondent.</div>';
                 //var_dump(password_verify($mdp, $reponse['mdp']));
