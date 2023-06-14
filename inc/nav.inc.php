@@ -39,7 +39,7 @@ require_once "function.inc.php";
                             <?php endif; ?>
                             <?php if (isAdmin()) : ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Page Admin</a>
+                                    <a class="nav-link" href="<?= URL ?>admin/gestion_article.php">Gestion Article</a>
                                 </li>
                             <?php endif; ?>
                         </ul>
