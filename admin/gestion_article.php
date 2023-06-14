@@ -10,11 +10,49 @@ require_once "../inc/nav.inc.php";
 // prix
 // stock
 
+$reference = 45654654654 ;
+
 var_dump($_POST);
+if (isset($_FILES['photo'])) {
+
+    var_dump($_FILES['photo']) ;
+    $errors = array();
+    $file_nom = $_FILES['photo']['name'];
+    $file_taille = $_FILES['photo']['size'];
+    $file_tmp = $_FILES['photo']['tmp_name'];
+    $file_type = $_FILES['photo']['type'];
+
+    //$file_ext = strtolower(end(explode('.', $file_nom)));
+    
+    $file_ext = (explode('.', $_FILES['photo']['name']));
+    $file_ext = strtolower(end($file_ext)) ;
+
+    //controle du file_nom
+    
+    var_dump($file_ext) ;
+    $extensions = array("jpeg", "jpg", "png");
+
+    //$extension = substr(strrchr($photo, '.'), 1);
+
+    if (in_array($file_ext, $extensions) === false) {
+        $errors[] = "extension non acceptée, choisir entre JPEG ou PNG.";
+    }
+
+    if ($file_taille > 2097152) {
+        $errors[] = 'File size must be excately 2 MB';
+    }
+
+    if (empty($errors) == true) {
+        move_uploaded_file($file_tmp, "../assets/img_produits/".$reference."_".$file_nom);
+        echo "Success";
+    } else {
+        print_r($errors);
+    }
+}
 ?>
 
 <main class="container">
-    <form class="row g-3" method="post" id="article">
+    <form class="row g-3" method="post" enctype="multipart/form-data">
         <div class="col-md-12">
             <label for="reference" class="form-label">Reference :</label>
             <input type="text" class="form-control" id="reference" name="reference">
@@ -58,7 +96,7 @@ var_dump($_POST);
 
         <div class="col-md-6">
             <label for="sexe" class="form-label">Sexe :</label>
-            <select class="form-select" name="sexe" id="sexe" required>
+            <select class="form-select" name="sexe" id="sexe">
                 <option value="" selected disabled>faite votre choix :</option>
                 <option value="m">Homme</option>
                 <option value="f">Femme</option>
@@ -76,7 +114,7 @@ var_dump($_POST);
         </div>
         <div class="col-md-4">
             <label for="photo" class="form-label">Photo :</label>
-            <input class="form-control" type="file" name="photo" id="photo" accept="image/png, image/jpeg">
+            <input class="form-control" type="file" name="photo" id="photo" accept="image/*">
         </div>
 
         <div class="col-md-12">

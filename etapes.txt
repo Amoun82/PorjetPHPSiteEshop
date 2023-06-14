@@ -46,7 +46,7 @@ Jour 3
     - Page admin/gestion_article.php : formulaire(controles) / enregistrement / affichage dans un tableau HTML la liste des produits / lien de suppression / lien de modification 
     - Suppression + modification dans la BDD 
     - Page index.php 
-    - Affichage des catégories en liste 
+    - Affichage des catégories en lis
     - Affichage des blocs produits : titre / photo / prix / catégorie / lien vers la page détails 
     - Filtre à mettre en place sur catégorie 
 Jour 4 
