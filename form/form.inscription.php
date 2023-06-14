@@ -264,8 +264,8 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
             <input type="text" class="form-control" id="prenom" placeholder="votre prenom" name="prenom" required>
         </div>
         <div class="col-md-6">
-            <label for="inputState" class="form-label">sexe</label>
-            <select id="inputState" class="form-select" name="sexe" id="sexe" required>
+            <label for="sexe" class="form-label">Sexe :</label>
+            <select id="sexe" class="form-select" name="sexe" id="sexe" required>
                 <option value="" selected disabled>faite votre choix :</option>
                 <option value="m">Homme</option>
                 <option value="f">Femme</option>
