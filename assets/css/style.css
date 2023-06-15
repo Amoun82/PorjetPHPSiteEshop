@@ -3,6 +3,10 @@ main{
     margin-bottom: 30px;
 }
 
-.disparaitre {
-    
+h1{
+    color: red;
+}
+
+a{
+    text-decoration: none;
 }

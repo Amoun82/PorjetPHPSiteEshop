@@ -20,5 +20,5 @@ echo "</pre>";
 session_start() ;
 
 define("URL", "http://localhost/PHPprojetDoranco/");
-
+define("SERVEUR_ROOT", $_SERVER['DOCUMENT_ROOT']) ;
 $messageErreur = "";

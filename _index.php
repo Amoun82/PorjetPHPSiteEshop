@@ -12,7 +12,8 @@ $listeArticle = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 
 <main>
-    page d'accueil
+    <h1>page d'accueil</h1>
+    
 
     <?php
 
