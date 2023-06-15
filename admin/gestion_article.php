@@ -9,198 +9,202 @@ if (!isAdmin()) {
 }
 
 /* ############# la partie ajoute d'un article ############# */
-$reference = 45654654654;
-
 $erreur = false;
 
 // echo "je suis dans la page gestion article" ;
 
-if(isset($_GET))
-{
-    
-}
+var_dump(isset($_GET['id'])) ;
 
-echo "voir le post";
-var_dump($_POST);
-if (isset($_FILES['photo'], $_POST['reference'], $_POST['titre'], $_POST['categorie'], $_POST['couleur'], $_POST['taille'], $_POST['sexe'], $_POST['prix'], $_POST['stock'], $_POST['description'])) {
+if (!isset($_GET['id'])) {
+    echo "je suis sans le get" ;
+    var_dump(isset($_GET));
+    echo "voir le post";
+    var_dump($_POST);
+    if (isset($_FILES['photo'], $_POST['reference'], $_POST['titre'], $_POST['categorie'], $_POST['couleur'], $_POST['taille'], $_POST['sexe'], $_POST['prix'], $_POST['stock'], $_POST['description'])) {
 
-    // echo "je passe dans l'isset";
-    $reference = trim($_POST['reference']);
-    $titre = trim($_POST['titre']);
-    $categorie =  $_POST['categorie'];
-    $couleur =  $_POST['couleur'];
-    $taille = $_POST['taille'];
-    $sexe = $_POST['sexe'];
-    $prix = trim($_POST['prix']);
-    $stock = trim($_POST['stock']);
-    $description = trim($_POST['description']);
+        // echo "je passe dans l'isset";
+        $reference = trim($_POST['reference']);
+        $titre = trim($_POST['titre']);
+        $categorie =  $_POST['categorie'];
+        $couleur =  $_POST['couleur'];
+        $taille = $_POST['taille'];
+        $sexe = $_POST['sexe'];
+        $prix = trim($_POST['prix']);
+        $stock = trim($_POST['stock']);
+        $description = trim($_POST['description']);
 
-    if (empty($reference) || empty($titre) || empty($categorie) || empty($couleur) || empty($taille) || empty($sexe) || empty($prix) || empty($stock) || empty($description)) {
-        $messageErreur .= '<div class="alert alert-danger" role="alert">
+        if (empty($reference) || empty($titre) || empty($categorie) || empty($couleur) || empty($taille) || empty($sexe) || empty($prix) || empty($stock) || empty($description)) {
+            $messageErreur .= '<div class="alert alert-danger" role="alert">
             Attention, un des champs sont vides</div>';
-        $erreur = true;
-    } else {
-
-
-        $verifReference = preg_match('#^[0-9]{4,15}$#', $reference);
-        $verifPrix = preg_match('#^[0-9]{1,}$#', $prix);
-        $verifStock = preg_match('#^[0-9]{1,}$#', $stock);
-
-        //$verifTitre = preg_match('#^[a-zA-Z0-9._-]+ $#', $titre);
-        //$verifDescription = preg_match('#^[a-zA-Z0-9._-]+$#', $description);
-
-        // recuperer la liste des refrence
-        $reponse = $pdo->query("SELECT reference from article");
-
-        // echo "<pre>";
-        // print_r($reponse);
-        // echo "</pre>";
-
-        $referenceBDD = $reponse->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($pseudoBDD);
-
-        // compare la reference envoyer par l'admin par rapport au refrence contenu dans la base
-        foreach ($referenceBDD as $key => $value) {
-
-            if (strcmp($value['reference'], $reference) == 0) {
-                $erreur = true;
-                $messageErreur .= '<div class="alert alert-danger" role="alert">
-            reference deja utlisé.</div>';
-            }
-        }
-
-        if ($verifReference == false) {
             $erreur = true;
-            $messageErreur .= '<div class="alert alert-danger" role="alert">
-            Attention, la reference ne peut contenir que des chiffres.</div>';
-        }
-        if ($verifPrix == false) {
-            $erreur = true;
-            $messageErreur .= '<div class="alert alert-danger" role="alert">
-            Attention, le prix ne peut contenir que des chiffres.</div>';
-        }
-        if ($verifStock == false) {
-            $erreur = true;
-            $messageErreur .= '<div class="alert alert-danger" role="alert">
-            Attention, le stock ne peut contenir que des chiffres.</div>';
-        }
-
-
-        // if ($verifTitre == false) {
-        //     $erreur = true;
-        //     $messageErreur .= '<div class="alert alert-danger" role="alert">
-        //     Attention, le titre ne peut pas contenir autre chose que des minuscules, majuscules, point, tiret, underscore.</div>';
-        // }
-        // if ($verifDescription == false) {
-        //     $erreur = true;
-        //     $messageErreur .= '<div class="alert alert-danger" role="alert">
-        //     Attention, la description ne peut pas contenir autre chose que des minuscules, majuscules, point, tiret, underscore.</div>';
-        // }
-    }
-
-
-    // verifie la longueur de la reference
-    if (iconv_strlen($reference) > 10) {
-        $messageErreur .= '<div class="alert alert-danger" role="alert">
-        Attention la reference est trop long</div>';
-        $erreur = true;
-    }
-
-    // verifie la longueur de la reference
-    if (iconv_strlen($reference) < 4) {
-        $messageErreur .= '<div class="alert alert-danger" role="alert">
-        Attention la reference est trop court</div>';
-        $erreur = true;
-    }
-
-
-    // verifie la longueur de la reference
-    if (iconv_strlen($titre) > 50) {
-        $messageErreur .= '<div class="alert alert-danger" role="alert">
-        Attention le titre est trop long</div>';
-        $erreur = true;
-    }
-
-    // verifie la longueur de la reference
-    if (iconv_strlen($titre) < 4) {
-        $messageErreur .= '<div class="alert alert-danger" role="alert">
-        Attention le titre est trop court</div>';
-        $erreur = true;
-    }
-
-
-    if ($erreur == false) {
-
-        echo "voir la piece jointe";
-        var_dump($_FILES['photo']);
-
-        if (empty($_FILES['photo']['name'])) {
-            echo "attention la piece jointe est vide";
         } else {
+
+
+            $verifReference = preg_match('#^[0-9]{4,15}$#', $reference);
+            $verifPrix = preg_match('#^[0-9]{1,}$#', $prix);
+            $verifStock = preg_match('#^[0-9]{1,}$#', $stock);
+
+            //$verifTitre = preg_match('#^[a-zA-Z0-9._-]+ $#', $titre);
+            //$verifDescription = preg_match('#^[a-zA-Z0-9._-]+$#', $description);
+
+            // recuperer la liste des refrence
+            $reponse = $pdo->query("SELECT reference from article");
+
+            // echo "<pre>";
+            // print_r($reponse);
+            // echo "</pre>";
+
+            $referenceBDD = $reponse->fetchAll(PDO::FETCH_ASSOC);
+            // var_dump($pseudoBDD);
+
+            // compare la reference envoyer par l'admin par rapport au refrence contenu dans la base
+            foreach ($referenceBDD as $key => $value) {
+
+                if (strcmp($value['reference'], $reference) == 0) {
+                    $erreur = true;
+                    $messageErreur .= '<div class="alert alert-danger" role="alert">
+            reference deja utlisé.</div>';
+                }
+            }
+
+            if ($verifReference == false) {
+                $erreur = true;
+                $messageErreur .= '<div class="alert alert-danger" role="alert">
+            Attention, la reference ne peut contenir que des chiffres.</div>';
+            }
+            if ($verifPrix == false) {
+                $erreur = true;
+                $messageErreur .= '<div class="alert alert-danger" role="alert">
+            Attention, le prix ne peut contenir que des chiffres.</div>';
+            }
+            if ($verifStock == false) {
+                $erreur = true;
+                $messageErreur .= '<div class="alert alert-danger" role="alert">
+            Attention, le stock ne peut contenir que des chiffres.</div>';
+            }
+
+
+            // if ($verifTitre == false) {
+            //     $erreur = true;
+            //     $messageErreur .= '<div class="alert alert-danger" role="alert">
+            //     Attention, le titre ne peut pas contenir autre chose que des minuscules, majuscules, point, tiret, underscore.</div>';
+            // }
+            // if ($verifDescription == false) {
+            //     $erreur = true;
+            //     $messageErreur .= '<div class="alert alert-danger" role="alert">
+            //     Attention, la description ne peut pas contenir autre chose que des minuscules, majuscules, point, tiret, underscore.</div>';
+            // }
+        }
+
+
+        // verifie la longueur de la reference
+        if (iconv_strlen($reference) > 10) {
+            $messageErreur .= '<div class="alert alert-danger" role="alert">
+        Attention la reference est trop long</div>';
+            $erreur = true;
+        }
+
+        // verifie la longueur de la reference
+        if (iconv_strlen($reference) < 4) {
+            $messageErreur .= '<div class="alert alert-danger" role="alert">
+        Attention la reference est trop court</div>';
+            $erreur = true;
+        }
+
+
+        // verifie la longueur de la reference
+        if (iconv_strlen($titre) > 50) {
+            $messageErreur .= '<div class="alert alert-danger" role="alert">
+        Attention le titre est trop long</div>';
+            $erreur = true;
+        }
+
+        // verifie la longueur de la reference
+        if (iconv_strlen($titre) < 4) {
+            $messageErreur .= '<div class="alert alert-danger" role="alert">
+        Attention le titre est trop court</div>';
+            $erreur = true;
+        }
+
+
+        if ($erreur == false) {
+
+            echo "voir la piece jointe";
             var_dump($_FILES['photo']);
-            $file_nom = $_FILES['photo']['name'];
-            $file_taille = $_FILES['photo']['size'];
-            $file_tmp = $_FILES['photo']['tmp_name'];
-            $file_type = $_FILES['photo']['type'];
 
-            //$file_ext = strtolower(end(explode('.', $file_nom)));
-
-            $file_ext = (explode('.', $_FILES['photo']['name']));
-            $file_ext = strtolower(end($file_ext));
-
-            //controle du file_nom
-
-            var_dump($file_ext);
-            $extensions = array("jpeg", "jpg", "png");
-
-            //$extension = substr(strrchr($photo, '.'), 1);
-
-            if (in_array($file_ext, $extensions) === false) {
-                $erreur = true;
-                $messageErreur .= '<div class="alert alert-danger" role="alert">
-            Attention, extension non acceptée, choisir entre JPEG ou PNG.</div>';
-            }
-
-            if ($file_taille > 20971520) {
-                $erreur = true;
-                $messageErreur .= '<div class="alert alert-danger" role="alert">
-            Attention, taille maximum 20 MB.</div>';
-            }
-
-            if ($erreur == false) {
-                move_uploaded_file($file_tmp, "../assets/img_produits/" . $reference . "_" . $file_nom);
-                echo "Success";
+            if (empty($_FILES['photo']['name'])) {
+                echo "attention la piece jointe est vide";
             } else {
-                print_r($errors);
-            }
+                var_dump($_FILES['photo']);
+                $file_nom = $_FILES['photo']['name'];
+                $file_taille = $_FILES['photo']['size'];
+                $file_tmp = $_FILES['photo']['tmp_name'];
+                $file_type = $_FILES['photo']['type'];
 
-            // preparer ma requete demain
-            /* INSERT INTO `article`(`id_article`, `reference`, `categorie`, `titre`, `description`, `couleur`, `taille`, `sexe`, `photo`, `prix`, `stock`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]') */
-            $requete = $pdo->prepare("INSERT INTO article(reference, categorie, titre, description, couleur, taille, sexe, photo, prix, stock) VALUES (:reference, :categorie, :titre, :description, :couleur, :taille, :sexe, :photo, :prix, :stock)");
+                //$file_ext = strtolower(end(explode('.', $file_nom)));
 
-            $file_nom = $reference . "_" . $file_nom;
-            $requete->bindParam(':reference', $reference, PDO::PARAM_INT);
-            $requete->bindParam(':categorie', $categorie, PDO::PARAM_STR);
-            $requete->bindParam(':titre', $titre, PDO::PARAM_STR);
-            $requete->bindParam(':description', $description, PDO::PARAM_STR);
-            $requete->bindParam(':couleur', $couleur, PDO::PARAM_STR);
-            $requete->bindParam(':taille', $taille, PDO::PARAM_STR);
-            $requete->bindParam(':sexe', $sexe, PDO::PARAM_STR);
-            $requete->bindParam(':photo', $file_nom, PDO::PARAM_STR);
-            $requete->bindParam(':prix', $prix, PDO::PARAM_INT);
-            $requete->bindParam(':stock', $stock, PDO::PARAM_STR);
-            $requete->execute();
+                $file_ext = (explode('.', $_FILES['photo']['name']));
+                $file_ext = strtolower(end($file_ext));
 
-            // $arr = $requete->errorInfo();
-            // print_r($arr);
+                //controle du file_nom
 
-            $messageErreur = '<div class="alert alert-success" role="alert">
+                var_dump($file_ext);
+                $extensions = array("jpeg", "jpg", "png");
+
+                //$extension = substr(strrchr($photo, '.'), 1);
+
+                if (in_array($file_ext, $extensions) === false) {
+                    $erreur = true;
+                    $messageErreur .= '<div class="alert alert-danger" role="alert">
+            Attention, extension non acceptée, choisir entre JPEG ou PNG.</div>';
+                }
+
+                if ($file_taille > 20971520) {
+                    $erreur = true;
+                    $messageErreur .= '<div class="alert alert-danger" role="alert">
+            Attention, taille maximum 20 MB.</div>';
+                }
+
+                if ($erreur == false) {
+                    move_uploaded_file($file_tmp, "../assets/img_produits/" . $reference . "_" . $file_nom);
+                    echo "Success";
+                } else {
+                    print_r($errors);
+                }
+
+                // preparer ma requete demain
+                /* INSERT INTO `article`(`id_article`, `reference`, `categorie`, `titre`, `description`, `couleur`, `taille`, `sexe`, `photo`, `prix`, `stock`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]') */
+                $requete = $pdo->prepare("INSERT INTO article(reference, categorie, titre, description, couleur, taille, sexe, photo, prix, stock) VALUES (:reference, :categorie, :titre, :description, :couleur, :taille, :sexe, :photo, :prix, :stock)");
+
+                $file_nom = $reference . "_" . $file_nom;
+                $requete->bindParam(':reference', $reference, PDO::PARAM_INT);
+                $requete->bindParam(':categorie', $categorie, PDO::PARAM_STR);
+                $requete->bindParam(':titre', $titre, PDO::PARAM_STR);
+                $requete->bindParam(':description', $description, PDO::PARAM_STR);
+                $requete->bindParam(':couleur', $couleur, PDO::PARAM_STR);
+                $requete->bindParam(':taille', $taille, PDO::PARAM_STR);
+                $requete->bindParam(':sexe', $sexe, PDO::PARAM_STR);
+                $requete->bindParam(':photo', $file_nom, PDO::PARAM_STR);
+                $requete->bindParam(':prix', $prix, PDO::PARAM_INT);
+                $requete->bindParam(':stock', $stock, PDO::PARAM_STR);
+                $requete->execute();
+
+                // $arr = $requete->errorInfo();
+                // print_r($arr);
+
+                $messageErreur = '<div class="alert alert-success" role="alert">
     vous avez enregistrer un produit</div>';
-            //header('location:form.connexion.php');
+                //header('location:form.connexion.php');
+            }
         }
     }
 }
-/* ############# Modification PRODUIT ############# */
+else
+{
+    /* ############# Modification PRODUIT ############# */
+    echo "je suis avec le get" ;
+
+}
 
 
 /* ############# CRUUD PRODUIT ############# */
