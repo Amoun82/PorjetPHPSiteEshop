@@ -83,16 +83,16 @@ if (isset($_POST['pseudo'], $_POST['mdp'])) {
 
 
         if ($erreur == false) {
-            $_SESSION['pseudo'] = $reponse['pseudo'];
-            $_SESSION['id_menbre'] = $reponse['id_menbre'];
-            $_SESSION['nom'] = $reponse['nom'];
-            $_SESSION['prenom'] = $reponse['prenom'];
-            $_SESSION['email'] = $reponse['email'];
-            $_SESSION['sexe'] = $reponse['sexe'];
-            $_SESSION['ville'] = $reponse['ville'];
-            $_SESSION['cp'] = $reponse['cp'];
-            $_SESSION['adresse'] = $reponse['adresse'];
-            $_SESSION['status'] = $reponse['status'];
+            $_SESSION['menbre']['pseudo'] = $reponse['pseudo'];
+            $_SESSION['menbre']['id_menbre'] = $reponse['id_menbre'];
+            $_SESSION['menbre']['nom'] = $reponse['nom'];
+            $_SESSION['menbre']['prenom'] = $reponse['prenom'];
+            $_SESSION['menbre']['email'] = $reponse['email'];
+            $_SESSION['menbre']['sexe'] = $reponse['sexe'];
+            $_SESSION['menbre']['ville'] = $reponse['ville'];
+            $_SESSION['menbre']['cp'] = $reponse['cp'];
+            $_SESSION['menbre']['adresse'] = $reponse['adresse'];
+            $_SESSION['menbre']['status'] = $reponse['status'];
 
             header('location:../_index.php');
             //var_dump($_SESSION);

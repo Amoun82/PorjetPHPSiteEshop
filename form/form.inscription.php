@@ -78,10 +78,7 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         $erreur = true;
     } else {
 
-        $reponsePseudo = $pdo->query("SELECT pseudo from menbre");
-
-
-
+        
         $verifPseudo = preg_match('#^[a-zA-Z0-9._-]+$#', $pseudo);
         $verifnom = preg_match('#^[a-zA-Z]+$#', $nom);
         $verifPrenom = preg_match('#^[a-zA-Z]+$#', $prenom);
@@ -153,13 +150,13 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         }
     }
 
-    // verifie la longueur du pseudo
+    // verifie la longueur du mot de passe
     if (iconv_strlen($mdp) > 35) {
         $messageErreur .= '<div class="alert alert-danger" role="alert">
         Attention votre mot de passe est trop long</div>';
         $erreur = true;
     }
-    // verifie la longueur du pseudo
+    // verifie la longueur du mot de passe
     if (iconv_strlen($mdp) < 3) {
         $messageErreur .= '<div class="alert alert-danger" role="alert">
         Attention votre mot de passe est trop court</div>';
@@ -179,13 +176,13 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         Attention votre pseudo est trop court</div>';
         $erreur = true;
     }
-    // verifie la longueur du pseudo
+    // verifie la longueur du nom
     if (iconv_strlen($nom) > 20) {
         $messageErreur .= '<div class="alert alert-danger" role="alert">
         Attention votre pseudo est trop long</div>';
         $erreur = true;
     }
-    // verifie la longueur du pseudo
+    // verifie la longueur du nom
     if (iconv_strlen($prenom) > 20) {
         $messageErreur .= '<div class="alert alert-danger" role="alert">
         Attention votre pseudo est trop long</div>';
@@ -193,7 +190,7 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
     }
 
 
-    //pou hasher le mot de passe en vérifiant que mot de passe et confirme mot de passe soit identique
+    //pour hasher le mot de passe en vérifiant que mot de passe et confirme mot de passe soit identique
     if (strcmp($mdp, $confirmeMdp) !== 0) {
         $messageErreur .= '<div class="alert alert-danger" role="alert">
     Attention, les deux mots de passe ne correspondent pas</div>';

@@ -1,7 +1,7 @@
 <?php
 
 function isConnect() {
-    if(isset($_SESSION['status']))
+    if(isset($_SESSION['menbre']['status']))
     {
         return false ;
     }else{
@@ -10,7 +10,7 @@ function isConnect() {
 }
 
 function isAdmin() {
-    if(isset($_SESSION['status']) && $_SESSION['status'] == 1)
+    if(isset($_SESSION['menbre']['status']) && $_SESSION['menbre']['status'] == 1)
     {
         return true ;
     }else {
