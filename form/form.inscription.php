@@ -1,10 +1,10 @@
 <?php
 require_once "../inc/init.inc.php";
-require_once "../inc/header.inc.php";
-require_once "../inc/nav.inc.php";
+require_once "../inc/function.inc.php";
+
 
 if (!isConnect()) {
-    header('location:../_index.php');
+    header('location:../index.php');
     exit();
 }
 
@@ -78,12 +78,12 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
         $erreur = true;
     } else {
 
-        
+
         $verifPseudo = preg_match('#^[a-zA-Z0-9._-]+$#', $pseudo);
         $verifnom = preg_match('#^[a-zA-Z]+$#', $nom);
         $verifPrenom = preg_match('#^[a-zA-Z]+$#', $prenom);
 
-        $verifVille = preg_match('#^[a-zA-Z]+$#', $ville);
+        $verifVille = preg_match('#^[a-zA-Z-]+$#', $ville);
 
         $verifCp = preg_match('#^[0-9]{5}$#', $cp);
 
@@ -228,6 +228,8 @@ if (isset($_POST['email'], $_POST['pseudo'], $_POST['mdp'], $_POST['confirmeMdp'
     INSERT INTO `menbre`(`id_menbre`, `pseudo`, `mdp`, `nom`, `prenom`, `email`, `sexe`, `ville`, `cp`, `adresse`, `status`) VALUES (NULL,'test2','test','test','test','test@test.test]','m','test','05000','test','2') */
 }
 
+require_once "../inc/header.inc.php";
+require_once "../inc/nav.inc.php";
 
 ?>
 

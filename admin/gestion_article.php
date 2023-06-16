@@ -1,7 +1,7 @@
 <?php
 require_once "../inc/init.inc.php";
-require_once "../inc/header.inc.php";
-require_once "../inc/nav.inc.php";
+require_once "../inc/function.inc.php";
+
 
 if (!isAdmin()) {
     header('location:../_index.php');
@@ -11,6 +11,17 @@ if (!isAdmin()) {
 /* ############# la partie ajoute d'un article ############# */
 $erreur = false;
 $isGet = false;
+
+$reference;
+$titre;
+$categorie;
+$couleur;
+$taille;
+$sexe;
+$prix;
+$stock;
+$description;
+
 
 // echo "je suis dans la page gestion article" ;
 
@@ -131,13 +142,13 @@ if (!isset($_GET['id'])) {
 
         if ($erreur == false) {
 
-            echo "voir la piece jointe";
-            var_dump($_FILES['photo']);
+            // echo "voir la piece jointe";
+            // var_dump($_FILES['photo']);
 
             if (empty($_FILES['photo']['name'])) {
                 echo "attention la piece jointe est vide";
             } else {
-                var_dump($_FILES['photo']);
+                //var_dump($_FILES['photo']);
                 $file_nom = $_FILES['photo']['name'];
                 $file_taille = $_FILES['photo']['size'];
                 $file_tmp = $_FILES['photo']['tmp_name'];
@@ -150,7 +161,7 @@ if (!isset($_GET['id'])) {
 
                 //controle du file_nom
 
-                var_dump($file_ext);
+                //var_dump($file_ext);
                 $extensions = array("jpeg", "jpg", "png");
 
                 //$extension = substr(strrchr($photo, '.'), 1);
@@ -200,30 +211,43 @@ if (!isset($_GET['id'])) {
             }
         }
     }
+} elseif (isset($_GET['id'], $_GET['action'])) {
+    /* ############# Modification PRODUIT ############# */
+    //echo "je suis dans le else pour supprimer";
+    $id = $_GET['id'];
+    $action = $_GET['action'];
+
+
+    if (!empty($id) && $action == 'delete') {
+        //echo 'je vais supprimer le produit';
+        //DELETE FROM article WHERE id_article = $id
+
+        $requete = $pdo->query("DELETE FROM article WHERE id_article = $id");
+    }
 } else {
     /* ############# Modification PRODUIT ############# */
-    echo "je suis avec le get";
+    //echo "je suis avec le get";
     $isGet = true;
-    var_dump($_GET);
+    //var_dump($_GET);
     $id = $_GET['id'];
 
     $requete = $pdo->query("SELECT * from article where id_article = $id");
 
     $article = $requete->fetch(PDO::FETCH_ASSOC);
 
-    var_dump($article);
+    //var_dump($article);
 
-    var_dump($article['photo']);
+    //var_dump($article['photo']);
 
     $file = SERVEUR_ROOT . "\PHPprojetDoranco\assets\img_produits\\" . $article['photo'];
 
-    var_dump($file);
+    //var_dump($file);
 
     //$photo = preg_replace('/[^A-Za-z0-9.\-]/', '', $photo);
 
-    echo "<img src='{$file}'>";
+    //echo "<img src='{$file}'>";
     $isFile = file_exists($file);
-    var_dump($isFile);
+    //var_dump($isFile);
 
     if (isset($_FILES['photo'], $_POST['titre'], $_POST['categorie'], $_POST['couleur'], $_POST['taille'], $_POST['sexe'], $_POST['prix'], $_POST['stock'], $_POST['description'])) {
 
@@ -243,7 +267,7 @@ if (!isset($_GET['id'])) {
             $erreur = true;
         } else {
 
-            $verifPrix = preg_match('#^[0-9.]{1,}$#', $prix);
+            $verifPrix = preg_match('#^[0-9.,]{1,}$#', $prix);
             $verifStock = preg_match('#^[0-9]{1,}$#', $stock);
 
             if ($verifPrix == false) {
@@ -274,6 +298,56 @@ if (!isset($_GET['id'])) {
         }
 
         if ($erreur == false) {
+
+            // echo "voir la piece jointe";
+            // var_dump($_FILES['photo']);
+
+            if (!empty($_FILES['photo']['name'])) {
+
+                //var_dump($_FILES['photo']);
+                $file_nom = $_FILES['photo']['name'];
+                $file_taille = $_FILES['photo']['size'];
+                $file_tmp = $_FILES['photo']['tmp_name'];
+                $file_type = $_FILES['photo']['type'];
+
+                //$file_ext = strtolower(end(explode('.', $file_nom)));
+
+                $file_ext = (explode('.', $_FILES['photo']['name']));
+                $file_ext = strtolower(end($file_ext));
+
+                //controle du file_nom
+
+                //var_dump($file_ext);
+                $extensions = array("jpeg", "jpg", "png");
+
+                //$extension = substr(strrchr($photo, '.'), 1);
+
+                if (in_array($file_ext, $extensions) === false) {
+                    $erreur = true;
+                    $messageErreur .= '<div class="alert alert-danger" role="alert">
+                Attention, extension non acceptée, choisir entre JPEG ou PNG.</div>';
+                }
+
+                if ($file_taille > 20971520) {
+                    $erreur = true;
+                    $messageErreur .= '<div class="alert alert-danger" role="alert">
+                Attention, taille maximum 20 MB.</div>';
+                }
+
+                if ($erreur == false) {
+                    move_uploaded_file($file_tmp, "../assets/img_produits/" . $reference . "_" . $file_nom);
+                    echo "Success";
+                } else {
+                    print_r($errors);
+                }
+                // $arr = $requete->errorInfo();
+                // print_r($arr);
+
+                $messageErreur = '<div class="alert alert-success" role="alert">
+        vous avez enregistrer un produit</div>';
+                //header('location:form.connexion.php');
+            }
+
 
             /*
             UPDATE `article` SET `id_article`='[value-1]',`reference`='[value-2]',`categorie`='[value-3]',`titre`='[value-4]',`description`='[value-5]',`couleur`='[value-6]',`taille`='[value-7]',`sexe`='[value-8]',`photo`='[value-9]',`prix`='[value-10]',`stock`='[value-11]' WHERE 1
@@ -308,6 +382,9 @@ $requete = $pdo->query("SELECT * from article");
 $nbrArticles = $requete->rowCount();
 
 $listeArticles = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+require_once "../inc/header.inc.php";
+require_once "../inc/nav.inc.php";
 
 ?>
 
@@ -454,7 +531,6 @@ $listeArticles = $requete->fetchAll(PDO::FETCH_ASSOC);
 
                                 <figure class="col-md-3 me-5 align-self-center">
                                     <img style="height : 160px" src="<?= URL . "assets/img_produits/" . $listeArticles[$i]['photo'] ?>" alt="<?= $listeArticles[$i]['photo'] ?>">
-                                    <figcaption><?= $listeArticles[$i]['photo'] ?></figcaption>
                                 </figure>
                                 <div class="col-md-6">
                                     <?= "Ref : " . $listeArticles[$i]['reference'] . "<br>" ?>
@@ -471,7 +547,7 @@ $listeArticles = $requete->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <a type="button" class="btn btn-primary" href="<?= URL . "admin/delete_article.php?id=" . $listeArticles[$i]['id_article'] ?>">Effacer</a>
+                                <a type="button" class="btn btn-primary" href="<?= URL . "admin/gestion_article.php?id=" . $listeArticles[$i]['id_article'] . "&action=delete" ?>">Effacer</a>
                             </div>
                         </div>
                     </div>

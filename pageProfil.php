@@ -1,14 +1,15 @@
 <?php
 require_once "./inc/init.inc.php";
-require_once "./inc/header.inc.php";
-require_once "./inc/nav.inc.php";
+require_once "./inc/function.inc.php";
+
 
 if (isConnect()) {
     header('location:./_index.php');
     exit();
 }
 // var_dump($_SESSION);
-
+require_once "./inc/header.inc.php";
+require_once "./inc/nav.inc.php";
 ?>
 
 

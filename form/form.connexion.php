@@ -1,10 +1,10 @@
 <?php
 require_once "../inc/init.inc.php";
-require_once "../inc/header.inc.php";
-require_once "../inc/nav.inc.php";
+require_once "../inc/function.inc.php";
+
 
 if (!isConnect()) {
-    header('location:../_index.php');
+    header('location:'.URL.'index.php');
     exit();
 }
 
@@ -94,11 +94,14 @@ if (isset($_POST['pseudo'], $_POST['mdp'])) {
             $_SESSION['menbre']['adresse'] = $reponse['adresse'];
             $_SESSION['menbre']['status'] = $reponse['status'];
 
-            header('location:../_index.php');
+            header('location:../index.php');
             //var_dump($_SESSION);
         }
     }
 }
+
+require_once "../inc/header.inc.php";
+require_once "../inc/nav.inc.php";
 
 ?>
 
