@@ -60,3 +60,6 @@ Dernière étape dès vendredi matin :
     - Mise en ligne du projet quelque soit votre avancement 
     - Poursuite des étapes si mise en ligne OK 
     - Envoi en .zip de votre projet à P-A 
+
+
+    le serveur est herberger sur https://panel.000webhost.com/
